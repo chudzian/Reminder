@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.pszen.deadlinetracker.model.Reminder;
 import com.example.pszen.deadlinetracker.util.Util;
@@ -24,9 +25,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        Log.d("DBcreated:","true");
         String CREATE_CONTACT_TABLE = "CREATE TABLE " + Util.TABLE_NAME + "("
                 + Util.KEY_ID + " INTEGER PRIMARY KEY," + Util.KEY_MESSAGE + " TEXT,"
-                + Util.KEY_DATEANDTIME + " TEXT," + Util.KEY_DESCRIPTION + " TEXT" + ")";
+                + Util.KEY_DATEANDTIME + " INTEGER," + Util.KEY_DESCRIPTION + " TEXT,"
+                + Util.KEY_NOTIFICATION_ID + " INTEGER," + Util.KEY_PICTOGRAM + " BLOB" + ")";
 
         sqLiteDatabase.execSQL(CREATE_CONTACT_TABLE);
     }
@@ -49,6 +52,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         value.put(Util.KEY_MESSAGE, reminder.getMessage());
         value.put(Util.KEY_DATEANDTIME, reminder.getDateAndTime());
         value.put(Util.KEY_DESCRIPTION, reminder.getDescription());
+        value.put(Util.KEY_NOTIFICATION_ID, reminder.getNotificationId());
+        value.put(Util.KEY_PICTOGRAM, reminder.getPictogram());
 
         db.insert(Util.TABLE_NAME,null,value);
         db.close();
@@ -58,13 +63,20 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(Util.TABLE_NAME,
-                new String[] {Util.KEY_ID,Util.KEY_MESSAGE,Util.KEY_DATEANDTIME,Util.KEY_DESCRIPTION},
+                new String[] {Util.KEY_ID,Util.KEY_MESSAGE,Util.KEY_DATEANDTIME,Util.KEY_DESCRIPTION,Util.KEY_NOTIFICATION_ID,Util.KEY_PICTOGRAM},
                 Util.KEY_ID + "=?", new String[] {String.valueOf(id)},null,null,null,null);
 
         if (cursor != null)
             cursor.moveToFirst();
 
-        Reminder reminder = new Reminder(Integer.parseInt(cursor.getString(0)), cursor.getString(1),cursor.getString(2),cursor.getString(3));
+        Reminder reminder = new Reminder(
+                Integer.parseInt(cursor.getString(0)),
+                cursor.getString(1),
+                Long.parseLong(cursor.getString(2)),
+                cursor.getString(3),
+                Integer.parseInt(cursor.getString(4)),
+                cursor.getBlob(5)
+        );
 
         return reminder;
     }
@@ -83,8 +95,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 Reminder reminder = new Reminder();
                 reminder.setId(Integer.parseInt(cursor.getString(0)));
                 reminder.setMessage(cursor.getString(1));
-                reminder.setDateAndTime(cursor.getString(2));
+                reminder.setDateAndTime(Long.parseLong(cursor.getString(2)));
                 reminder.setDescription(cursor.getString(3));
+                reminder.setNotificationId(cursor.getInt(4));
+                reminder.setPictogram(cursor.getBlob(5));
 
                 reminderList.add(reminder);
             }while (cursor.moveToNext());
@@ -97,4 +111,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         db.delete(Util.TABLE_NAME,null,null);
     }
+
+    public Reminder getReminderByNotifId(int nId){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT * FROM " + Util.TABLE_NAME + " WHERE " + Util.KEY_ID + " = " + nId;
+        Cursor cursor = db.rawQuery(selectQuery,null);
+
+        Reminder reminder = new Reminder();
+        if(cursor.moveToFirst()){
+            reminder.setId(Integer.parseInt(cursor.getString(0)));
+            reminder.setMessage(cursor.getString(1));
+            reminder.setDateAndTime(Long.parseLong(cursor.getString(2)));
+            reminder.setDescription(cursor.getString(3));
+            reminder.setNotificationId(cursor.getInt(4));
+            reminder.setPictogram(cursor.getBlob(5));
+        }
+        cursor.close();
+        return reminder;
+    }
+
+
 }
