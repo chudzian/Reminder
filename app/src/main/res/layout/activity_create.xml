@@ -27,10 +27,11 @@
         android:id="@+id/create_description_editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/create_date_editText"
-        android:layout_centerHorizontal="true"
         android:ems="10"
-        android:hint="Description"
+        android:hint="Description (optional)"
         android:inputType="text|textMultiLine"
         android:padding="16dp" />
 
@@ -57,6 +58,7 @@
 
     <Button
         android:id="@+id/create_button"
+        style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/create_description_editText"
@@ -69,13 +71,23 @@
         android:id="@+id/create_time_editText"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/create_description_editText"
-        android:layout_alignEnd="@+id/centerShim"
-        android:layout_alignRight="@+id/centerShim"
+        android:layout_alignBaseline="@+id/create_date_editText"
+        android:layout_alignBottom="@+id/create_date_editText"
+        android:layout_toLeftOf="@+id/centerShim"
+        android:layout_toStartOf="@+id/centerShim"
         android:ems="10"
         android:focusable="false"
         android:hint="Time"
         android:inputType="none"
         android:padding="16dp" />
+
+    <Spinner
+        android:id="@+id/create_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/create_time_editText"
+        android:layout_toLeftOf="@+id/create_time_editText"
+        android:layout_toStartOf="@+id/create_time_editText" />
+
 
 </RelativeLayout>
