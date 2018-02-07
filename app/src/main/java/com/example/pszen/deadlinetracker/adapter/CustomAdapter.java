@@ -3,19 +3,25 @@ package com.example.pszen.deadlinetracker.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.pszen.deadlinetracker.R;
-import com.example.pszen.deadlinetracker.model.ListItem;
 import com.example.pszen.deadlinetracker.model.Reminder;
+import com.example.pszen.deadlinetracker.util.Controller;
+import com.example.pszen.deadlinetracker.util.Util;
 import com.example.pszen.deadlinetracker.view.DetailActivity;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,8 +49,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Reminder reminder = reminderList.get(position);
+
         holder.message.setText(reminder.getMessage());
-        holder.dateAndTime.setText(reminder.getDateAndTime());
+        holder.dateAndTime.setText(Controller.dateAndTimeString(reminder.getDateAndTime()));
+        holder.pictogram.setImageResource(reminder.getPictogram());
 
     }
 
@@ -54,9 +62,10 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        public TextView message;
-        public TextView dateAndTime;
-        public TextView description;
+        private TextView message;
+        private TextView dateAndTime;
+        private TextView description;
+        private ImageView pictogram;
 
         public ViewHolder(View view, Context ctx, ArrayList<Reminder> items) {
             super(view);
@@ -68,6 +77,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
             message = (TextView) view.findViewById(R.id.message_textView);
             dateAndTime = (TextView) view.findViewById(R.id.dateAndTime_textView);
+            pictogram = (ImageView) view.findViewById(R.id.pictogram_imageView);
 
         }
 
@@ -81,6 +91,12 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             intent.putExtra("message", item.getMessage());
             intent.putExtra("dateAndTime",item.getDateAndTime());
             intent.putExtra("description",item.getDescription());
+            Log.d("id: ",String.valueOf(item.getId()));
+            Log.d("message: ",String.valueOf(item.getMessage()));
+            Log.d("dateAndTime: ",String.valueOf(item.getDateAndTime()));
+            Log.d("description: ",String.valueOf(item.getDescription()));
+            Log.d("notificationID: ",String.valueOf(item.getNotificationId()));
+            Log.d("pictogram: ",String.valueOf(item.getPictogram()));
 
             context.startActivity(intent);
         }

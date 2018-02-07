@@ -1,93 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/create_relativeLayout"
+    tools:context="com.example.pszen.deadlinetracker.view.CreateActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.pszen.deadlinetracker.view.CreateActivity">
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/create_message_editText"
+        style="@style/CreateReminderEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@color/colorPrimaryDark"
-        android:ems="10"
-        android:hint="Remind me about"
-        android:inputType="text|textMultiLine"
-        android:padding="16dp"
-        android:singleLine="false"
+        android:textColorHint="@color/colorTransparentWhite"
         android:textColor="@color/WHITE"
-        android:textColorHint="@color/colorTransparentWhite" />
+        android:background="@color/colorPrimaryDark"
+        android:hint="@string/remindmeabout_hint" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/centerShim"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_toLeftOf="@id/centerShim"
+            android:layout_toStartOf="@id/centerShim">
+
+            <EditText
+                android:id="@+id/create_date_editText"
+                style="@style/CreateReminderDateAndTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/date_hint" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toEndOf="@+id/centerShim"
+            android:layout_toRightOf="@+id/centerShim"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:id="@+id/create_time_editText"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/time_hint"
+                    style="@style/CreateReminderDateAndTime"/>
+
+                <Spinner
+                    android:id="@+id/create_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/create_time_editText"
+                    android:layout_toEndOf="@id/create_time_editText"
+                    />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </RelativeLayout>
 
     <EditText
         android:id="@+id/create_description_editText"
+        style="@style/CreateReminderEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/create_date_editText"
-        android:ems="10"
-        android:hint="Description (optional)"
-        android:inputType="text|textMultiLine"
-        android:padding="16dp" />
-
-    <View
-        android:id="@+id/centerShim"
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:visibility="invisible" />
-
-    <EditText
-        android:id="@+id/create_date_editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/centerShim"
-        android:layout_alignStart="@+id/centerShim"
-        android:layout_below="@+id/create_message_editText"
-        android:cursorVisible="false"
-        android:ems="10"
-        android:focusable="false"
-        android:hint="Date"
-        android:inputType="none"
-        android:padding="16dp" />
+        android:hint="@string/description_hint" />
 
     <Button
         android:id="@+id/create_button"
-        style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/create_description_editText"
-        android:layout_alignRight="@+id/create_description_editText"
-        android:layout_below="@+id/create_description_editText"
-        android:layout_marginTop="90dp"
-        android:text="new reminder" />
+        android:layout_gravity="end"
+        android:text="@string/button_text" />
 
-    <EditText
-        android:id="@+id/create_time_editText"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/create_date_editText"
-        android:layout_alignBottom="@+id/create_date_editText"
-        android:layout_toLeftOf="@+id/centerShim"
-        android:layout_toStartOf="@+id/centerShim"
-        android:ems="10"
-        android:focusable="false"
-        android:hint="Time"
-        android:inputType="none"
-        android:padding="16dp" />
-
-    <Spinner
-        android:id="@+id/create_spinner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/create_time_editText"
-        android:layout_toLeftOf="@+id/create_time_editText"
-        android:layout_toStartOf="@+id/create_time_editText" />
-
-
-</RelativeLayout>
+</LinearLayout>

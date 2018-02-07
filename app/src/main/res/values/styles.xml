@@ -8,7 +8,14 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="CreateReminder">
+    <style name="CreateReminderEditText">
+        <item name="android:padding">16dp</item>
+        <item name="android:ems">10</item>
+        <item name="android:inputType">textMultiLine</item>
+    </style>
+    <style name="CreateReminderDateAndTime">
+        <item name="android:inputType">none</item>
+        <item name="android:focusable">false</item>
         <item name="android:padding">16dp</item>
     </style>
 

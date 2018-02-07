@@ -7,23 +7,49 @@ package com.example.pszen.deadlinetracker.model;
 public class Reminder {
     private int id;
     private String message;
-    private String dateAndTime;
+    private long dateAndTime;
     private String description;
+    private int notificationId;
+    private int pictogram;
 
     public Reminder() {
     }
 
-    public Reminder(int id, String message, String dateAndTime, String description) {
+    public Reminder(int id, String message, long dateAndTime, String description) {
         this.id = id;
         this.message = message;
         this.dateAndTime = dateAndTime;
         this.description = description;
     }
 
-    public Reminder(String message, String dateAndTime, String description) {
+    public Reminder(String message, long dateAndTime, String description) {
         this.message = message;
         this.dateAndTime = dateAndTime;
         this.description = description;
+    }
+
+    public Reminder(int id, String message, long dateAndTime, String description, int notificationId, int pictogram) {
+        this.id = id;
+        this.message = message;
+        this.dateAndTime = dateAndTime;
+        this.description = description;
+        this.notificationId = notificationId;
+        this.pictogram = pictogram;
+    }
+
+    public Reminder(String message, long dateAndTime, String description, int notificationId, int pictogram) {
+        this.message = message;
+        this.dateAndTime = dateAndTime;
+        this.description = description;
+        this.notificationId = notificationId;
+        this.pictogram = pictogram;
+    }
+
+    public Reminder(String message, long dateAndTime, String description, int notificationId) {
+        this.message = message;
+        this.dateAndTime = dateAndTime;
+        this.description = description;
+        this.notificationId = notificationId;
     }
 
     public int getId() {
@@ -42,11 +68,11 @@ public class Reminder {
         this.message = message;
     }
 
-    public String getDateAndTime() {
+    public long getDateAndTime() {
         return dateAndTime;
     }
 
-    public void setDateAndTime(String dateAndTime) {
+    public void setDateAndTime(long dateAndTime) {
         this.dateAndTime = dateAndTime;
     }
 
@@ -56,5 +82,21 @@ public class Reminder {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getNotificationId() {
+        return notificationId;
+    }
+
+    public void setNotificationId(int notificationId) {
+        this.notificationId = notificationId;
+    }
+
+    public int getPictogram() {
+        return pictogram;
+    }
+
+    public void setPictogram(int pictogram) {
+        this.pictogram = pictogram;
     }
 }
